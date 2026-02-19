@@ -1,6 +1,5 @@
 #
-# Copyright (C) 2020 The LineageOS Project
-#
+# SPDX-FileCopyrightText: The LineageOS Project
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -36,11 +35,17 @@ TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := kryo385
 
 # Audio
+AUDIO_FEATURE_ENABLED_DLKM := true
 AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT := true
+AUDIO_FEATURE_ENABLED_GEF_SUPPORT := true
 AUDIO_FEATURE_ENABLED_GKI := true
+AUDIO_FEATURE_ENABLED_INSTANCE_ID := true
 AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
+AUDIO_FEATURE_ENABLED_SSR := true
+AUDIO_FEATURE_ENABLED_SVA_MULTI_STAGE := true
+BOARD_SUPPORTS_OPENSOURCE_STHAL := true
 BOARD_SUPPORTS_SOUND_TRIGGER := true
-TARGET_PROVIDES_AUDIO_EXTNS := true
+BOARD_USES_ALSA_AUDIO := true
 
 # Bootloader
 TARGET_NO_BOOTLOADER := true
@@ -57,7 +62,7 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default
 # HIDL
 DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
 
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
     hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml \
     $(COMMON_PATH)/hidl/vendor_framework_compatibility_matrix.xml \
@@ -66,6 +71,11 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
 DEVICE_MANIFEST_FILE := \
     $(COMMON_PATH)/hidl/manifest_lahaina.xml \
     $(COMMON_PATH)/hidl/manifest_xiaomi.xml
+
+ifeq ($(TARGET_HAS_UDFPS),true)
+DEVICE_MANIFEST_FILE += \
+    $(COMMON_PATH)/hidl/manifest_udfps.xml
+endif
 
 # Kernel
 BOARD_KERNEL_BASE := 0x00000000
@@ -127,9 +137,6 @@ TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 # Platform
 TARGET_BOARD_PLATFORM := lahaina
 
-# Power
-TARGET_POWERHAL_MODE_EXT := $(COMMON_PATH)/power/power-mode.cpp
-
 # Properties
 TARGET_ODM_PROP += $(COMMON_PATH)/odm.prop
 TARGET_SYSTEM_PROP += $(COMMON_PATH)/system.prop
@@ -151,7 +158,8 @@ TARGET_USERIMAGES_USE_F2FS := true
 ENABLE_VENDOR_RIL_SERVICE := true
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2025-02-01
+BOOT_SECURITY_PATCH := 2025-09-01
+VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
 
 # Sepolicy
 include device/qcom/sepolicy_vndr/SEPolicy.mk
