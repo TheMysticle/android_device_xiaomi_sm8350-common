@@ -142,7 +142,7 @@ PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
 
 PRODUCT_PACKAGES += \
     DSPVolumeSynchronizer \
-    DolbyAtmos \
+    LunarisDolby \
     XiaomiDolbyResCommon
 
 # Display
