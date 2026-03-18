@@ -14,6 +14,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 # Enable project quotas and casefolding for emulated storage without sdcardfs
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
+# Camera
+$(call inherit-product-if-exists, vendor/xiaomi/camera/miuicamera.mk)
+
 # Inherit proprietary targets
 $(call inherit-product, vendor/xiaomi/sm8350-common/sm8350-common-vendor.mk)
 
